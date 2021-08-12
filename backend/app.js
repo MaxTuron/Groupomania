@@ -5,7 +5,7 @@ const path = require('path');
 
 const app = express();
 
-//const userRoutes = require('./routes/user');
+const userRoutes = require('./routes/user');
 
 //Header - Gestion du CORS
 app.use((req, res, next) => {
@@ -15,11 +15,17 @@ app.use((req, res, next) => {
     next();
 });
 
+app.get('/', function (req, res) {
+   res.setHeader('Content-Type', 'text/html');
+   res.status(200).send('<h1>Bonjour</h1>');
+});
+
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 
-//app.use('/api/user', userRoutes);
+app.use('/api/user', userRoutes);
 
 module.exports = app;

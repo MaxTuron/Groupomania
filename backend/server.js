@@ -49,5 +49,4 @@ server.on('listening', () => {
 });
 
 server.listen(port, function(){
-    console.log('Serveur démarer !');
 });
