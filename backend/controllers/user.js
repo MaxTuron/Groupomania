@@ -62,7 +62,7 @@ exports.login = (req, res) => {
 };
 
 
-exports.getProfileList = (req, res, next) => {
+exports.getAllUser = (req, res, next) => {
     db.user.findAll()
         .then((users) => res.status(200).json(users))
         .catch((error) => res.status(500).json({ error }));
