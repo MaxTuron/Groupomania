@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const db = require("../models");
+const Sequelize = require('sequelize');
 
 exports.signup = (req, res) => {
     db.user.findOne({where: { email: req.body.email }})
@@ -45,6 +46,8 @@ exports.login = (req, res) => {
                     res.status(200).json({
                         userId: user.id,
                         admin: user.admin,
+                        name: user.name,
+                        lastName: user.lastName,
                         token: jwt.sign(
                             //ID utilisateur
                             { userId: user._id },
@@ -57,4 +60,17 @@ exports.login = (req, res) => {
                 .catch(error => res.status(500).json({ error }));
         })
         .catch(error => res.status(500).json({ error }));
+};
+
+
+exports.getProfileList = (req, res, next) => {
+    db.user.findAll()
+        .then((users) => res.status(200).json(users))
+        .catch((error) => res.status(500).json({ error }));
+};
+
+exports.deleteUser = (req, res, next) => {
+    db.user.destroy({where: {id:req.query.id}})
+        .then(res.status(200).json({ message: 'User deleted !' }))
+        .catch(error => res.status(400).json({ error }));
 };
