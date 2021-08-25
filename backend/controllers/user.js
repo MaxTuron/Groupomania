@@ -1,7 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const db = require("../models");
-const Sequelize = require('sequelize');
 
 exports.signup = (req, res) => {
     db.user.findOne({where: { email: req.body.email }})
@@ -70,7 +69,25 @@ exports.getProfileList = (req, res, next) => {
 };
 
 exports.deleteUser = (req, res, next) => {
-    db.user.destroy({where: {id:req.query.id}})
-        .then(res.status(200).json({ message: 'User deleted !' }))
-        .catch(error => res.status(400).json({ error }));
+    const isAdmin = req.params.admin;
+    const id = req.params.id;
+    console.log(isAdmin);
+    console.log(id);
+
+    if(isAdmin === 1) {
+        db.user.destroy({where: {id: id}})
+            .then(() => res.status(200).json({ message: 'User supprimée !'}))
+            .catch(error => res.status(400).json({message : 'Erreur lors de la supression'}));
+   }else{
+       res.status(401).json({ message: ' Action non autorisée ' });
+   }
+};
+
+exports.deleteMyAccount = (req, res, next) => {
+    const id = req.params.id;
+    console.log(id);
+
+    db.user.destroy({ where: { id: id } })
+        .then(() => res.status(200).json({ message: 'User delete !' }))
+        .catch(error => console.log(error));
 };
