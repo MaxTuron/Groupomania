@@ -20,6 +20,14 @@ module.exports = {
         allowNull: false,
         type: Sequelize.BOOLEAN
       },
+      name: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      lastName: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

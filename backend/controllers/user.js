@@ -11,6 +11,8 @@ exports.signup = (req, res) => {
                         email: req.body.email,
                         password: hash,
                         admin: 0,
+                        name: req.body.name,
+                        lastName: req.body.lastName,
                     })
                         .then((user) => {
                             res.status(201).json({

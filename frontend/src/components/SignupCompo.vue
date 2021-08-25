@@ -1,5 +1,14 @@
 <template>
   <form>
+    <img src="../../../logo/icon-above-font.svg">
+    <div class="form-example">
+      <div class="form-example">
+        <label for="lastName">Nom </label>
+        <input type="text" name="lastName" id="lastName" required>
+      </div>
+      <label for="name">Prenom</label>
+      <input type="text" name="name" id="name" required>
+    </div>
     <div class="form-example">
       <label for="email">Email </label>
       <input type="text" name="email" id="email" required>
@@ -16,10 +25,12 @@
 
 <script>
 export default {
-  name: "Signup"
+  name: "SignupCompo"
 }
 </script>
 
 <style>
-
+img{
+  width: 20%;
+}
 </style>

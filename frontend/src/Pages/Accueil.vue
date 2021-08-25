@@ -2,7 +2,12 @@
   <div class="hello">
     <img src="../../../logo/icon-above-font.svg">
     <Login msg="Bienvenue sur le site de Groupomania"></Login>
-    <h2>Si vous n'avez pas de compte cliquez <button>ici</button></h2>
+    <p>
+      Si vous n'avez pas de compte cliquez
+      <router-link  to="/Signup">
+      <button>ici</button>
+      </router-link>
+    </p>
   </div>
 </template>
 
