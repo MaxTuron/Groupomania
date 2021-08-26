@@ -1,31 +1,18 @@
+<!--Centre de l'application VUE-->
+
 <template>
   <div id="nav">
-    <router-link to="/">Accueil</router-link>
+    <nav-bar></nav-bar>
   </div>
   <router-view/>
 </template>
 
 <script>
+import navBar from './components/navBar';
 
 export default {
   name: "App",
-  components: {},
-  data() {
-    return {
-      number: 5,
-      title: "Ma page",
-    }
-  },
-  props: {
-  },
-  methods: {
-    ma_fonction() {
-
-    },
-  },
-  mounted() {
-    console.log('mounted');
-  },
+  components: {navBar},
 }
 </script>
 

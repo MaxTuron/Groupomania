@@ -1,7 +1,8 @@
 <template>
   <div class="hello">
     <img src="../../../logo/icon-above-font.svg">
-    <Login msg="Bienvenue sur le site de Groupomania"></Login>
+    <h1>Connexion à un compte</h1>
+    <Login></Login>
     <p>
       Si vous n'avez pas de compte cliquez
       <router-link  to="/Signup">
