@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Accueil from '../Pages/Accueil.vue';
 import Signup from '../Pages/Signup.vue';
 import Message from '../Pages/Message.vue';
+import Profile from '../Pages/Profile.vue';
 
 
 const routes = [
@@ -19,6 +20,11 @@ const routes = [
     path: '/Message',
     name: 'Message',
     component: Message
+  },
+  {
+    path: '/Profile',
+    name: 'Profile',
+    component: Profile
   },
 ]
 

@@ -1,6 +1,7 @@
 <template>
-  <form @submit.prevent="login">
-    <div>
+  <form @submit.prevent="login" autocomplete="off">
+
+    <div class="formField">
       <label for="inputEmail">Email</label>
       <input
           v-model="inputEmail"
@@ -10,7 +11,7 @@
       />
     </div>
 
-    <div class="form-example">
+    <div class="formField">
       <label for="inputPassword">Mot de passe</label>
       <input
           v-model="inputPassword"
@@ -46,9 +47,7 @@ export default {
             email: this.inputEmail,
             password: this.inputPassword
           })
-          .then(function(res) {
-            sessionStorage.setItem('userId', res.data.userId);
-            sessionStorage.setItem('userName', res.data.name);
+          .then(function() {
             console.log("Vous êtes connecté !");
             router.push({ path: '/Message' });
           })
@@ -61,5 +60,18 @@ export default {
 </script>
 
 <style>
+form  {
+  display: grid;
+  justify-content: center;
+}
+
+label {
+  display: table-cell;
+}
+
+.formField {
+  margin-bottom: 10px;
+}
+
 
 </style>
