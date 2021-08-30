@@ -52,7 +52,7 @@
     </div>
 
     <div v-show="invalid" class="invalidBox m-2" key="invalid">
-      Veuillez remplir tous les champs SVP.
+      Erreur dans le formulaire.
     </div>
 
   </form>
@@ -75,7 +75,7 @@ export default {
   },
 
   methods: {
-    sendForm() {
+    async sendForm() {
       if (!this.inputName || !this.inputLastName || !this.inputEmail || !this.inputPassword) {
         return (this.invalid = true);
       }
@@ -84,7 +84,7 @@ export default {
       const mailRegex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
 
       if (nameRegex.test(this.inputName) && nameRegex.test(this.inputLastName) && mailRegex.test(this.inputEmail)) {
-      axios
+      await axios
           .post('http://localhost:3000/api/user/signup', {
             lastName: this.inputLastName,
             name: this.inputName,

@@ -69,25 +69,37 @@ exports.getAllUser = (req, res, next) => {
 };
 
 exports.deleteUser = (req, res, next) => {
-    const isAdmin = req.params.admin;
-    const id = req.params.id;
-    console.log(isAdmin);
-    console.log(id);
 
-    if(isAdmin === 1) {
-        db.user.destroy({where: {id: id}})
-            .then(() => res.status(200).json({ message: 'User supprimée !'}))
-            .catch(error => res.status(400).json({message : 'Erreur lors de la supression'}));
-   }else{
-       res.status(401).json({ message: ' Action non autorisée ' });
-   }
+    db.user.destroy({ where: { id: req.params.id } })
+        .then(() => res.status(200).json({ message: 'Utlisateur supprimé' }))
+        .catch(error => console.log(error));
 };
 
-exports.deleteMyAccount = (req, res, next) => {
-    const id = req.params.id;
-    console.log(id);
+exports.getOneUser = (req, res, next) => {
+    const userData = {};
+    db.user.findOne({ where: { id: req.params.id } })
+        .then(user => {
+            userData.id = user.id;
+            userData.name = user.name;
+            userData.lastName = user.lastName;
+            userData.email = user.email;
+            userData.createdAt = user.createdAt;
+            userData.admin = user.admin;
+        })
+        .then(() => {
+            console.log(userData)
+            res.status(200).json(userData);
+        })
+        .catch(error => res.status(404).json({ error }));
+};
 
-    db.user.destroy({ where: { id: id } })
-        .then(() => res.status(200).json({ message: 'User delete !' }))
-        .catch(error => console.log(error));
+exports.updateUser = (req, res, next) => {
+    console.log(req.params.id);
+    console.log(req.body.userName);
+
+    db.user.update({ name: req.body.name }, { returning: true, where: { id: req.params.id } })
+        .then(() => {
+            res.status(200).json({ message: 'Nom modifié !', data: req.body.name });
+        })
+        .catch(error => res.status(400).json({ error }));
 };

@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="login" autocomplete="off">
+  <form @submit.prevent="login()" autocomplete="off">
 
     <div class="formField">
       <label for="inputEmail">Email</label>
@@ -30,7 +30,7 @@
 
 <script>
 import axios from 'axios';
-import router from '../router';
+
 
 export default {
   name: "Login",
@@ -47,12 +47,19 @@ export default {
             email: this.inputEmail,
             password: this.inputPassword
           })
-          .then(function() {
-            console.log("Vous êtes connecté !");
-            router.push({ path: '/Message' });
+          .then((res) => {
+            console.log(res.data.admin);
+            sessionStorage.setItem("token", res.data.token);
+            sessionStorage.setItem("admin", res.data.admin);
+            sessionStorage.setItem("userId", res.data.userId);
+            this.mail = "";
+            this.password = "";
+            this.$router.push("/Message");
           })
-          .catch(error => {
-            console.log(error);
+          .catch(() => {
+            this.mail = "";
+            this.password = "";
+            this.$router.push("/");
           });
     }
   }
