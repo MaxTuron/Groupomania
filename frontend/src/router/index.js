@@ -3,6 +3,7 @@ import Accueil from '../Pages/Accueil.vue';
 import Signup from '../Pages/Signup.vue';
 import Message from '../Pages/Message.vue';
 import Profile from '../Pages/Profile.vue';
+import CreationMessage from '../Pages/CreationMessage.vue';
 
 
 const routes = [
@@ -25,6 +26,12 @@ const routes = [
     path: '/Profile',
     name: 'Profile',
     component: Profile
+  },
+
+  {
+    path: '/CreationMessage',
+    name: 'CreationMessage',
+    component: CreationMessage
   },
 ]
 

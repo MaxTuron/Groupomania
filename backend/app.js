@@ -1,11 +1,16 @@
 //Import du framework express'
 const express = require('express');
 const bodyParser = require('body-parser');
+const fs = require('fs');
+const filesDir = 'images';
 const path = require('path');
+
+const userRoutes = require('./routes/user');
+const messagesRoutes = require('./routes/messages');
 
 const app = express();
 
-const userRoutes = require('./routes/user');
+
 
 //Header - Gestion du CORS
 app.use((req, res, next) => {
@@ -15,10 +20,12 @@ app.use((req, res, next) => {
     next();
 });
 
-app.get('/', function (req, res) {
-   res.setHeader('Content-Type', 'text/html');
-   res.status(200).send('<h1>Bonjour</h1>');
-});
+app.use(express.json());
+
+//Permet de créer le dossier images si il n'existe pas
+if (!fs.existsSync(filesDir)) {
+    fs.mkdirSync(filesDir);
+}
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
@@ -27,5 +34,6 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 
 
 app.use('/api/user', userRoutes);
+app.use('/api/messages', messagesRoutes);
 
 module.exports = app;

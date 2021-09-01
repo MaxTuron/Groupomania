@@ -69,7 +69,7 @@ exports.getAllUser = (req, res, next) => {
 };
 
 exports.deleteUser = (req, res, next) => {
-
+    console.log(req, res, next);
     db.user.destroy({ where: { id: req.params.id } })
         .then(() => res.status(200).json({ message: 'Utlisateur supprimé' }))
         .catch(error => console.log(error));

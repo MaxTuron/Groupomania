@@ -15,7 +15,7 @@
       <label for="inputPassword">Mot de passe</label>
       <input
           v-model="inputPassword"
-          type="text"
+          type="password"
           id="inputPassword"
           placeholder="Entrez mot de passe."
       />
@@ -48,7 +48,6 @@ export default {
             password: this.inputPassword
           })
           .then((res) => {
-            console.log(res.data.admin);
             sessionStorage.setItem("token", res.data.token);
             sessionStorage.setItem("admin", res.data.admin);
             sessionStorage.setItem("userId", res.data.userId);
