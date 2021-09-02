@@ -4,6 +4,8 @@ import Signup from '../Pages/Signup.vue';
 import Message from '../Pages/Message.vue';
 import Profile from '../Pages/Profile.vue';
 import CreationMessage from '../Pages/CreationMessage.vue';
+import modifProfil from '../Pages/modifProfil.vue';
+import ListeUtilisateur from '../Pages/ListeUtilisateur.vue';
 
 
 const routes = [
@@ -27,11 +29,20 @@ const routes = [
     name: 'Profile',
     component: Profile
   },
-
   {
     path: '/CreationMessage',
     name: 'CreationMessage',
     component: CreationMessage
+  },
+  {
+    path: '/modifProfil',
+    name: 'modifProfil',
+    component: modifProfil
+  },
+  {
+    path: '/ListeUtilisateur',
+    name: 'ListeUtilisateur',
+    component: ListeUtilisateur
   },
 ]
 

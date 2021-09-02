@@ -64,7 +64,7 @@ exports.login = (req, res) => {
 
 exports.getAllUser = (req, res, next) => {
     db.user.findAll()
-        .then((users) => res.status(200).json(users))
+        .then((users) => res.status(200).json({users}))
         .catch((error) => res.status(500).json({ error }));
 };
 
@@ -73,6 +73,19 @@ exports.deleteUser = (req, res, next) => {
     db.user.destroy({ where: { id: req.params.id } })
         .then(() => res.status(200).json({ message: 'Utlisateur supprimé' }))
         .catch(error => console.log(error));
+};
+
+exports.deleteOneUser = (req, res, next) => {
+
+    if (req.query.admin) {
+        db.user.destroy({ where: { id: req.query.id } })
+            .then(res => {
+                res.status(200).json({ message: 'L\'utilisateur à été supprimé' });
+            })
+            .catch(error => res.status(400).json({ error }));
+    } else {
+        res.status(401).json({ message: ' Action non autorisée ' });
+    }
 };
 
 exports.getOneUser = (req, res, next) => {
@@ -95,11 +108,11 @@ exports.getOneUser = (req, res, next) => {
 
 exports.updateUser = (req, res, next) => {
     console.log(req.params.id);
-    console.log(req.body.userName);
+    console.log(req.body.name);
+    console.log(req.body.lastName);
+    console.log(req.body.email);
 
-    db.user.update({ name: req.body.name }, { returning: true, where: { id: req.params.id } })
-        .then(() => {
-            res.status(200).json({ message: 'Nom modifié !', data: req.body.name });
-        })
+    db.user.update({ name: req.body.name },{ lastName: req.body.lastName},{ email: req.body.email }, { returning: true, where: { id: req.params.id } })
+        .then(() => {res.status(200).json({ message: 'Profil modifié !'});})
         .catch(error => res.status(400).json({ error }));
 };

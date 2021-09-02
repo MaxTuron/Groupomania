@@ -1,31 +1,20 @@
 <template>
-  <div class="row justify-content-around">
-    <p class="m-1">Bonjour {{ userName }} !</p>
-    <button @click="deconexion">Deconexion</button>
-  </div>
-  <div class="card-body text-center">
-    <div class="dropdown text-center">
-      <p>Membre depuis le {{ creation }}</p>
-    </div>
-  </div>
+  <p class="m-1">Bonjour {{ name }} !</p>
   <div id="updateButton">
-    <textarea
-        v-on:keydown="isInvalid = false"
-        class="form-control"
-        v-model="user"
-        id="user"
-        name="userName"
-        rows="1"
-        placeholder="Quel est votre nouveau nom ?"
-    ></textarea>
-    <button type="button" @click="updateUser(user)">
-      Validé
-    </button>
+    <router-link  to="/modifProfil">
+      <button>Modifier son profil</button>
+    </router-link>
+  </div>
+  <div class="row justify-content-around">
+    <button @click="deconexion">Deconexion</button>
   </div>
   <div class="col">
     <button class="btn m-3" @click="deleteUser(id)">
       Supprimer mon compte
     </button>
+  </div>
+  <div class="card-body text-center">
+    <p>Membre depuis le {{ creation }}</p>
   </div>
 </template>
 
@@ -39,7 +28,7 @@ export default {
   },
   data() {
     return {
-      userName: '',
+      name: '',
       creation: '',
       id: '',
       user:'',
@@ -50,14 +39,14 @@ export default {
     let id = sessionStorage.getItem('userId');
     let self = this;
     axios
-        .get('http://localhost:3000/api/user/getOneUser/' + id)
+        .get('http://localhost:3000/api/user/getOneUser/' + id, {headers: {Authorization: 'Bearer ' + sessionStorage.getItem('token')}})
         .then(res => {
           self.creation = res.data.createdAt
               .slice(0, 10)
               .split('-')
               .reverse()
               .join('/');
-          self.userName = res.data.name.charAt(0).toUpperCase() + res.data.name.slice(1);
+          self.name = res.data.name.charAt(0).toUpperCase() + res.data.name.slice(1);
           self.id = res.data.id;
         })
         .catch(error => {
@@ -66,25 +55,6 @@ export default {
   },
 
   methods: {
-    updateUser(userName) {
-      axios
-          .put(
-              'http://localhost:3000/api/user/updateUser/' + sessionStorage.getItem('userId'),
-              {
-                userName
-              },
-              {
-                headers: {
-                  Authorization: 'Bearer ' + sessionStorage.getItem('token')
-                }
-              }
-          )
-          .then(res => {
-            sessionStorage.setItem('userName', res.data.name);
-            window.location.reload();
-          })
-          .catch(err => console.log(err));
-    },
 
     deconexion() {
       sessionStorage.clear();

@@ -1,0 +1,126 @@
+<template>
+  <main class="container">
+          <h2 class="my-2 btn-secondary font-weight-bold">Administration du site</h2>
+      <section id="main" class="row">
+        <!-- bloc utilisateur -->
+        <article class="col-12 col-md-4">
+          <div class="card bg-light my-3 class=center-block" style="float:none;">
+            <div class="card-header">
+              <div class="row justify-content-around">
+                <p class="m-1">Bonjour {{ name }} !</p>
+                <button @click="sessionClear">DECONNEXION</button>
+              </div>
+            </div>
+              <div class="dropdown text-center">
+                <p>Membre depuis le {{ creation }}</p>
+              </div>
+            <div class="card-body mx-auto font-weight-bold">
+              <p >Choisissez l'utilisateur à supprimer dans la liste ci-contre ></p>
+            </div>
+          </div>
+        </article>
+        <!--bloc liste utilisateurs-->
+        <sub class="col col-md-8">
+          <p class="text-black font-weight-bold text-center m-5 ">
+            LISTE DE TOUS LES UTILISATEURS
+          </p>
+
+          <div v-for="item in user" :key="item.name">
+            <p> Prenom: {{ item.name.charAt(0).toUpperCase() + item.name.slice(1) }} || Nom: {{ item.lastName.charAt(0).toUpperCase() + item.lastName.slice(1) }} || Email: {{ item.email }} ||
+								Date de création: {{ item.createdAt
+                    .slice(0, 10)
+                    .split('-')
+                    .reverse()
+                    .join('/')
+              }}
+            </p>
+              <span class="spanTableau">
+								<button class="rounded" @click="supprimerUnUtilisateur(item.id, admin)">Supprimer</button>
+							</span>
+          </div>
+        </sub>
+      </section>
+  </main>
+</template>
+
+<script>
+import axios from 'axios';
+import router from '../router';
+
+export default {
+  name: 'ListeUtilisateurCompo',
+  data() {
+    return {
+      admin: false,
+      name: '',
+      creation: '',
+      user: []
+    };
+  },
+  created: function() {
+    let id = sessionStorage.getItem('userId');
+    let self = this;
+    axios
+        .get('http://localhost:3000/api/user/getOneUser/' + id, { headers: { Authorization: 'Bearer ' + sessionStorage.getItem('token') } })
+        .then(res => {
+          self.creation = res.data.createdAt
+              .slice(0, 10)
+              .split('-')
+              .reverse()
+              .join('/');
+          self.admin = res.data.admin;
+          self.name = res.data.name.charAt(0).toUpperCase() + res.data.name.slice(1);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    axios
+        .get('http://localhost:3000/api/user/getAllUser', { headers: { Authorization: 'Bearer ' + sessionStorage.getItem('token') } })
+        .then(res => {
+          this.user = res.data.users;
+        })
+        .catch(error => {
+          console.log(error);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+  },
+  methods: {
+    supprimerUnUtilisateur(userId, isAdmin) {
+      let confirmUserDeletion = confirm('Souhaitez-vous supprimer cet utilisateur ?');
+      if (confirmUserDeletion == true) {
+        axios
+            .delete('http://localhost:3000/api/user/deleteOneUser/', {
+              headers: {
+                Authorization: 'Bearer ' + sessionStorage.getItem('token')
+              },
+              params: {
+                id: userId,
+                admin: isAdmin
+              }
+            })
+            .then(res => {
+              console.log(res);
+              alert("Confirmez votre choix en validant sur le bouton Ok");
+              router.replace('http://localhost:8080/api/ListeUtilisateur');
+            })
+            .catch(error => {
+              location.reload();
+              console.log(error);
+            });
+      } else {
+        return;
+      }
+    },
+    sessionClear() {
+      sessionStorage.clear();
+      router.push({ path: '/' });
+    },
+  }
+};
+</script>
+
+<style scoped>
+
+</style>
