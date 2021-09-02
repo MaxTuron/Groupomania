@@ -40,7 +40,7 @@
       Erreur dans le formulaire.
     </div>
 
-    <button type="button" @click="majUtilisateur(user)">
+    <button type="button" @click="majUtilisateur(inputName, inputLastName, inputEmail)">
       Modifier
     </button>
 
@@ -55,7 +55,7 @@ export default {
 
   data() {
     return {
-      id:'',
+      id: '',
       inputName: '',
       inputLastName: '',
       inputEmail: ''
@@ -84,14 +84,14 @@ export default {
         });
   },
   methods: {
-    majUtilisateur(inputName, inputLastName, inputEmail) {
+    majUtilisateur(name, lastName, email) {
       axios
           .put(
-              'http://localhost:3000/api/users/updateUser/' + sessionStorage.getItem('userId'),
+              'http://localhost:3000/api/user/updateUser/' + sessionStorage.getItem('userId'),
               {
-                inputName,
-                inputLastName,
-                inputEmail
+                name,
+                lastName,
+                email
               },
               {
                 headers: {
@@ -106,7 +106,7 @@ export default {
             window.location.reload();
           })
           .catch(err => console.log(err));
-    }
+    },
   }
 }
 </script>

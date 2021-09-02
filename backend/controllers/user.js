@@ -112,7 +112,7 @@ exports.updateUser = (req, res, next) => {
     console.log(req.body.lastName);
     console.log(req.body.email);
 
-    db.user.update({ name: req.body.name },{ lastName: req.body.lastName},{ email: req.body.email }, { returning: true, where: { id: req.params.id } })
+    db.user.update(req.body, { returning: true, where: { id: req.params.id } })
         .then(() => {res.status(200).json({ message: 'Profil modifié !'});})
         .catch(error => res.status(400).json({ error }));
 };
