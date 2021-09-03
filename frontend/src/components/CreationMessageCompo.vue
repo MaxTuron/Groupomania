@@ -14,13 +14,11 @@
     </div>
 
     <div class="col-12 justify-content-center form-group">
-      <label for="content">Ecrivez quelque chose.</label>
+      <label for="content">Ecrivez votre message.</label>
       <textarea
           v-on:keydown="isInvalid = false"
-          class="form-control"
           v-model="content"
           id="content"
-          name="contenu"
           rows="8"
           placeholder="Saisissez ici votre message."
       ></textarea>
@@ -31,20 +29,18 @@
     </div>
 
     <div class="form-group justify-content-center">
-      <label for="urlImage">Téléchargez une photo</label>
+      <label for="file">Téléchargez une photo</label>
       <input
           @change="selectFile()"
           type="file"
-          ref="urlImage"
-          name="image"
-          class="form-control-file"
-          id="urlImage"
+          ref="file"
+          id="file"
           accept=".jpg, .jpeg, .webp, .gif, .png"
       />
     </div>
 
     <div>
-      <input type="submit" value="Envoie du message">
+      <input type="submit" value="Création du message">
     </div>
 
     <div v-show="invalid" class="invalidBox m-2" key="invalid">
@@ -64,7 +60,8 @@ export default {
     return {
       title: '',
       content: '',
-      urlImage: null,
+      file:null,
+      urlImage: '',
       isInvalid: false
     };
   },
@@ -72,31 +69,37 @@ export default {
   methods: {
 
     selectFile() {
-      this.urlImage = this.$refs.urlImage.files[0];
+      this.file = this.$refs.file.files[0];
+      this.urlImage = URL.createObjectURL(this.file);
     },
 
     send() {
-      if (!this.urlImage || !sessionStorage.getItem('userName') || !this.content || this.content > 1500) {
+      if (!this.content || !this.title) {
         this.isInvalid = true;
       } else {
         const formData = new FormData();
-        formData.append('urlImage', this.urlImage);
+        formData.append('image', this.file);
         formData.append('title', this.title.toString());
         formData.append('content', this.content.toString());
         axios
-            .post('http://localhost:3000/api/messages/CreateMessages/', formData, {headers: {Authorization: 'Bearer ' + sessionStorage.getItem('token')}})
+            .post('http://localhost:3000/api/messages/createMessage',formData,{headers: {Authorization: 'Bearer ' + sessionStorage.getItem('token')}},{
+              title: this.title,
+              content: this.content,
+              urlImage: this.urlImage
+            })
             .then(() => {
-              this.title = '';
-              this.content = '';
-              this.urlImage = null;
               alert('Publication crée');
-              router.push({path: '/Message'});
+              router.push({ path: '/Message' });
             })
             .catch(error => {
               console.log(error);
+              console.log("Dans le catch");
             });
       }
     }
+
+
+
   }
 }
 </script>

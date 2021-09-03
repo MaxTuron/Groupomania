@@ -58,7 +58,8 @@ export default {
       id: '',
       inputName: '',
       inputLastName: '',
-      inputEmail: ''
+      inputEmail: '',
+      invalid: false
     }
   },
 
@@ -85,6 +86,14 @@ export default {
   },
   methods: {
     majUtilisateur(name, lastName, email) {
+      if (!this.inputName || !this.inputLastName || !this.inputEmail) {
+        return (this.invalid = true);
+      }
+
+      const nameRegex = /(.*[A-Za-z]){3,30}/;
+      const mailRegex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+
+      if (nameRegex.test(this.inputName) && nameRegex.test(this.inputLastName) && mailRegex.test(this.inputEmail)) {
       axios
           .put(
               'http://localhost:3000/api/user/updateUser/' + sessionStorage.getItem('userId'),
@@ -106,7 +115,10 @@ export default {
             window.location.reload();
           })
           .catch(err => console.log(err));
-    },
+    }else{
+        this.invalid = true;
+      }
+    }
   }
 }
 </script>

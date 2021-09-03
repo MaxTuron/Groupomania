@@ -6,6 +6,7 @@ import Profile from '../Pages/Profile.vue';
 import CreationMessage from '../Pages/CreationMessage.vue';
 import modifProfil from '../Pages/modifProfil.vue';
 import ListeUtilisateur from '../Pages/ListeUtilisateur.vue';
+import ListeMessages from '../Pages/ListeMessages.vue';
 
 
 const routes = [
@@ -43,6 +44,11 @@ const routes = [
     path: '/ListeUtilisateur',
     name: 'ListeUtilisateur',
     component: ListeUtilisateur
+  },
+  {
+    path: '/ListeMessages',
+    name: 'ListeMessages',
+    component: ListeMessages
   },
 ]
 

@@ -77,7 +77,7 @@ exports.deleteUser = (req, res, next) => {
 
 exports.deleteOneUser = (req, res, next) => {
 
-    if (req.query.admin) {
+    if (req.query.admin === 'true') {
         db.user.destroy({ where: { id: req.query.id } })
             .then(res => {
                 res.status(200).json({ message: 'L\'utilisateur à été supprimé' });

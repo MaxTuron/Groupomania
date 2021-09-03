@@ -1,4 +1,5 @@
 <template>
+  <section v-if="admin==true">
   <main class="container">
           <h2 class="my-2 btn-secondary font-weight-bold">Administration du site</h2>
       <section id="main" class="row">
@@ -15,7 +16,7 @@
                 <p>Membre depuis le {{ creation }}</p>
               </div>
             <div class="card-body mx-auto font-weight-bold">
-              <p >Choisissez l'utilisateur à supprimer dans la liste ci-contre ></p>
+              <p >Choisissez l'utilisateur à supprimer dans la liste ci-dessous</p>
             </div>
           </div>
         </article>
@@ -41,6 +42,10 @@
         </sub>
       </section>
   </main>
+  </section>
+  <section v-if="admin==false">
+    <h1>Vous n'avez pas acces à cette page !</h1>
+  </section>
 </template>
 
 <script>
@@ -78,6 +83,8 @@ export default {
         .get('http://localhost:3000/api/user/getAllUser', { headers: { Authorization: 'Bearer ' + sessionStorage.getItem('token') } })
         .then(res => {
           this.user = res.data.users;
+          console.log(res);
+          console.log(this.user);
         })
         .catch(error => {
           console.log(error);
@@ -88,8 +95,8 @@ export default {
   },
   methods: {
     supprimerUnUtilisateur(userId, isAdmin) {
-      let confirmUserDeletion = confirm('Souhaitez-vous supprimer cet utilisateur ?');
-      if (confirmUserDeletion == true) {
+      let confSuppr = confirm('Souhaitez-vous supprimer cet utilisateur ?');
+      if (confSuppr == true) {
         axios
             .delete('http://localhost:3000/api/user/deleteOneUser/', {
               headers: {
@@ -102,8 +109,8 @@ export default {
             })
             .then(res => {
               console.log(res);
-              alert("Confirmez votre choix en validant sur le bouton Ok");
-              router.replace('http://localhost:8080/api/ListeUtilisateur');
+              alert("Utilisateur supprimer");
+              location.reload();
             })
             .catch(error => {
               location.reload();
