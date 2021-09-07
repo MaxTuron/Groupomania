@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div class="main">
     <img src="../../../logo/icon-above-font.svg">
     <h1>Connexion à un compte</h1>
     <Login></Login>
@@ -24,6 +24,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
 h3 {
   margin: 40px 0 0;
 }

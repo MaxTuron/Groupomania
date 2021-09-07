@@ -56,7 +56,8 @@ import router from '../router';
 
 export default {
   name: "CreationMessageCompo",
-  components: {}, data() {
+  components: {},
+  data() {
     return {
       title: '',
       content: '',
@@ -71,6 +72,8 @@ export default {
     selectFile() {
       this.file = this.$refs.file.files[0];
       this.urlImage = URL.createObjectURL(this.file);
+      console.log(this.urlImage);
+
     },
 
     send() {
@@ -97,9 +100,6 @@ export default {
             });
       }
     }
-
-
-
   }
 }
 </script>

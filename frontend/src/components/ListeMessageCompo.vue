@@ -1,5 +1,5 @@
 <template>
-  <section v-if="admin==true">
+  <section v-if="admin===true">
   <main class="container">
     <h2 class="my-2 btn-secondary font-weight-bold">Administration du site</h2>
     <section id="main" class="row">
@@ -42,7 +42,7 @@
     </section>
   </main>
   </section>
-  <section v-if="admin==false">
+  <section v-if="admin===false">
     <h1>Vous n'avez pas acces à cette page !</h1>
   </section>
 </template>

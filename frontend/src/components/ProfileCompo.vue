@@ -1,4 +1,5 @@
 <template>
+  <section v-if="id!==''">
   <p class="m-1">Bonjour {{ name }} !</p>
   <div id="updateButton">
     <router-link  to="/modifProfil">
@@ -16,6 +17,12 @@
   <div class="card-body text-center">
     <p>Membre depuis le {{ creation }}</p>
   </div>
+  </section>
+  
+  <section v-if="id===''">
+    <h1>Vous n'avez pas acces à cette page !</h1>
+  </section>
+
 </template>
 
 <script>
@@ -31,7 +38,7 @@ export default {
       name: '',
       creation: '',
       id: '',
-      user:'',
+      user:''
     };
   },
 
