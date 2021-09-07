@@ -25,9 +25,11 @@
       <p>{{messageContent(item)}}</p>
         <img v-bind:src="item.urlImage">
         <h3>{{messageDate(item)}}</h3>
-        <button type="button" @click="modifMessage(item.id)">
-          Modifier
-        </button>
+        <div v-if="item.userId===id">
+          <button type="button" @click="modifMessage(item.id)">
+            Modifier
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -96,14 +98,14 @@ export default {
       return item.title.charAt(0).toUpperCase() + item.title.slice(1);
     },
     messageContent(item){
-      {{ item.content}}
+      return item.content
     },
     messageDate(item){
-      {{ item.createdAt
+      return item.createdAt
           .slice(0, 10)
           .split('-')
           .reverse()
-          .join('/') }}
+          .join('/')
     },
 
   }

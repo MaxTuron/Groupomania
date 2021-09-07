@@ -9,6 +9,7 @@ exports.createMessage = (req, res, next) => {
     }
     const message = new db.messages({
         content: req.body.content,
+        userId: req.body.userId,
         title: req.body.title,
         urlImage: imagePost
     });
@@ -26,6 +27,7 @@ exports.getOneMessage = (req, res, next) => {
             messageData.title = message.title;
             messageData.content = message.content;
             messageData.urlImage = message.urlImage;
+            messageData.userId = message.userId;
         })
         .then(() => {
             console.log(messageData)

@@ -63,6 +63,7 @@ export default {
       content: '',
       file:null,
       urlImage: '',
+      userId:'',
       isInvalid: false
     };
   },
@@ -84,11 +85,13 @@ export default {
         formData.append('image', this.file);
         formData.append('title', this.title.toString());
         formData.append('content', this.content.toString());
+        formData.append('userId', sessionStorage.getItem('userId'));
         axios
             .post('http://localhost:3000/api/messages/createMessage',formData,{headers: {Authorization: 'Bearer ' + sessionStorage.getItem('token')}},{
               title: this.title,
               content: this.content,
-              urlImage: this.urlImage
+              urlImage: this.urlImage,
+              userId: this.userId
             })
             .then(() => {
               alert('Publication crée');
