@@ -98,6 +98,7 @@ exports.getOneUser = (req, res, next) => {
             userData.email = user.email;
             userData.createdAt = user.createdAt;
             userData.admin = user.admin;
+            userData.password = user.password;
         })
         .then(() => {
             console.log(userData)
@@ -106,13 +107,33 @@ exports.getOneUser = (req, res, next) => {
         .catch(error => res.status(404).json({ error }));
 };
 
-exports.updateUser = (req, res, next) => {
-    console.log(req.params.id);
-    console.log(req.body.name);
-    console.log(req.body.lastName);
-    console.log(req.body.email);
 
+exports.updateLastName = (req, res, next) => {
     db.user.update(req.body, { returning: true, where: { id: req.params.id } })
-        .then(() => {res.status(200).json({ message: 'Profil modifié !'});})
+        .then(() => {res.status(200).json({ message: 'Nom modifié !'});})
         .catch(error => res.status(400).json({ error }));
+};
+
+exports.updateName = (req, res, next) => {
+    db.user.update(req.body, { returning: true, where: { id: req.params.id } })
+        .then(() => {res.status(200).json({ message: 'Prenom modifié !'});})
+        .catch(error => res.status(400).json({ error }));
+};
+
+exports.updateEmail = (req, res, next) => {
+    db.user.update(req.body, { returning: true, where: { id: req.params.id } })
+        .then(() => {res.status(200).json({ message: 'Email modifié !'});})
+        .catch(error => res.status(400).json({ error }));
+};
+
+exports.updatePassword = (req, res, next) => {
+
+    bcrypt.hash(req.body.password, 10).then((hash) => {
+        req.body.password = hash;
+        db.user.update(req.body, {returning: true, where: {id: req.params.id}})
+            .then(() => {
+                res.status(200).json({message: 'Mot de passe modifié !'});
+            })
+            .catch(error => res.status(400).json({error}));
+    })
 };

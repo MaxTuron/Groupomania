@@ -10,7 +10,10 @@ router.get('/getOneUser/:id', userCtrl.getOneUser);
 router.get('/getAllUser',auth, userCtrl.getAllUser);
 router.delete('/deleteUser/:id', auth, userCtrl.deleteUser);
 router.delete('/deleteOneUser/', auth, userCtrl.deleteOneUser);
-router.put('/updateUser/:id', auth, userCtrl.updateUser);
+router.put('/updateLastName/:id', auth, userCtrl.updateLastName);
+router.put('/updateName/:id', auth, userCtrl.updateName);
+router.put('/updateEmail/:id', auth, userCtrl.updateEmail);
+router.put('/updatePassword/:id', auth, userCtrl.updatePassword);
 
 
 

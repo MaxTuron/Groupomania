@@ -12,6 +12,7 @@
           id="inputLastName"
           placeholder="Entrez votre nouveau nom."
       />
+      <button @click="majLastName(inputLastName)">Editer</button>
     </div>
 
     <div class="formField">
@@ -23,6 +24,7 @@
           id="inputName"
           placeholder="Entrez votre nouveau prenom."
       />
+      <button @click="majName(inputName)">Editer</button>
     </div>
 
     <div class="formField">
@@ -34,15 +36,20 @@
           id="inputEmail"
           placeholder="Entrez votre nouvel email."
       />
+      <button @click="majEmail(inputEmail)">Editer</button>
     </div>
 
-    <div v-show="invalid" class="invalidBox m-2" key="invalid">
-      Erreur dans le formulaire.
+    <div class="formField">
+      <label for="inputPassword">Mot de passe</label>
+      <input
+          v-on:keydown="invalid = false"
+          v-model="inputPassword"
+          type="text"
+          id="inputPassword"
+          placeholder="Entrez votre nouveau mot de passe."
+      />
+      <button @click="majPassword(inputPassword)">Editer</button>
     </div>
-
-    <button type="button" @click="majUtilisateur(inputName, inputLastName, inputEmail)">
-      Modifier
-    </button>
 
   </form>
 </template>
@@ -59,6 +66,7 @@ export default {
       inputName: '',
       inputLastName: '',
       inputEmail: '',
+      inputPassword:'',
       invalid: false
     }
   },
@@ -85,41 +93,73 @@ export default {
         });
   },
   methods: {
-    majUtilisateur(name, lastName, email) {
-      if (!this.inputName || !this.inputLastName || !this.inputEmail) {
+    majLastName(lastName) {
+      if (!this.inputLastName) {
+        return (this.invalid = true);
+      }
+      const nameRegex = /(.*[A-Za-z]){3,30}/;
+
+      if (nameRegex.test(this.inputLastName)) {
+        axios
+            .put('http://localhost:3000/api/user/updateLastName/' + sessionStorage.getItem('userId'), {lastName},{headers: {Authorization: 'Bearer ' + sessionStorage.getItem('token')}})
+            .then(() => {
+              window.location.reload();
+            })
+            .catch(err => console.log(err));
+      } else {
+        this.invalid = true;
+      }
+    },
+
+    majName(name) {
+      if (!this.inputName) {
+        return (this.invalid = true);
+      }
+      const nameRegex = /(.*[A-Za-z]){3,30}/;
+
+      if (nameRegex.test(this.inputName)) {
+        axios
+            .put('http://localhost:3000/api/user/updateLastName/' + sessionStorage.getItem('userId'), {name}, {headers: {Authorization: 'Bearer ' + sessionStorage.getItem('token')}})
+            .then(() => {
+              window.location.reload();
+            })
+            .catch(err => console.log(err));
+      } else {
+        this.invalid = true;
+      }
+    },
+
+    majEmail(email) {
+      if (!this.inputEmail) {
+        return (this.invalid = true);
+      }
+      const mailRegex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+
+      if (mailRegex.test(this.inputEmail)) {
+        axios
+            .put('http://localhost:3000/api/user/updateEmail/' + sessionStorage.getItem('userId'), {email}, {headers: {Authorization: 'Bearer ' + sessionStorage.getItem('token')}})
+            .then(() => {
+              window.location.reload();
+            })
+            .catch(err => console.log(err));
+      } else {
+        this.invalid = true;
+      }
+    },
+
+    majPassword(password) {
+      if (!this.inputPassword) {
         return (this.invalid = true);
       }
 
-      const nameRegex = /(.*[A-Za-z]){3,30}/;
-      const mailRegex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
-
-      if (nameRegex.test(this.inputName) && nameRegex.test(this.inputLastName) && mailRegex.test(this.inputEmail)) {
-      axios
-          .put(
-              'http://localhost:3000/api/user/updateUser/' + sessionStorage.getItem('userId'),
-              {
-                name,
-                lastName,
-                email
-              },
-              {
-                headers: {
-                  Authorization: 'Bearer ' + sessionStorage.getItem('token')
-                }
-              }
-          )
-          .then(res => {
-            sessionStorage.setItem('name', res.data.name);
-            sessionStorage.setItem('lastName', res.data.lastName);
-            sessionStorage.setItem('email', res.data.email);
-            window.location.reload();
-          })
-          .catch(err => console.log(err));
-    }else{
-        this.invalid = true;
+        axios
+            .put('http://localhost:3000/api/user/updatePassword/' + sessionStorage.getItem('userId'), {password}, {headers: {Authorization: 'Bearer ' + sessionStorage.getItem('token')}})
+            .then(() => {
+              window.location.reload();
+            })
+            .catch(err => console.log(err));
       }
     }
-  }
 }
 </script>
 

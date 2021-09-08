@@ -53,7 +53,7 @@ export default {
             sessionStorage.setItem("userId", res.data.userId);
             this.mail = "";
             this.password = "";
-            this.$router.push("/Message");
+            this.$router.push({path: '/Message'});
           })
           .catch(() => {
             this.mail = "";
@@ -61,7 +61,7 @@ export default {
             this.$router.push("/");
           });
     }
-  }
+  },
 }
 </script>
 
