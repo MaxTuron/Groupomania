@@ -1,12 +1,12 @@
 <template>
-  <modif-message-compo></modif-message-compo>
+  <gestion-message-compo></gestion-message-compo>
 </template>
 
 <script>
-import ModifMessageCompo from "../components/modifMessageCompo";
+import GestionMessageCompo from "../components/GestionMessageCompo";
 export default {
   name: "modifMessage",
-  components: {ModifMessageCompo}
+  components: {GestionMessageCompo}
 }
 </script>
 

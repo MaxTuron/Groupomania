@@ -1,15 +1,15 @@
 <template>
-  <CreationMessageCompo></CreationMessageCompo>
+  <gestion-message-compo></gestion-message-compo>
 </template>
 
 <script>
 
-import CreationMessageCompo from "../components/CreationMessageCompo";
+import GestionMessageCompo from "../components/GestionMessageCompo";
 
 export default {
   name: "CreationMessage",
   components: {
-    CreationMessageCompo
+    GestionMessageCompo
   }
 }
 </script>
