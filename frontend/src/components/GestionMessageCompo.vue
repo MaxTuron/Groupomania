@@ -32,23 +32,24 @@
     <div class="form-group justify-content-center">
       <label for="file">Téléchargez une photo</label>
       <input
-          @change="selectFile()"
+          v-on:change="selectFile()"
           type="file"
           ref="file"
           id="file"
           accept=".jpg, .jpeg, .webp, .gif, .png"
       />
+
     </div>
 
     <div>
       <input v-if="isModif===false" type="submit" value="Création du message">
     </div>
 
-    <button v-if="isModif===true" type="button" @click="modifMessage(title, content)">
+    <button v-if="isModif===true" type="button" v-on:click="modifMessage(title, content)">
       Modifier
     </button>
 
-    <button v-if="isModif===true" type="button" @click="deleteMessage()">
+    <button v-if="isModif===true" type="button" v-on:click="deleteMessage()">
       Supprimer
     </button>
 
@@ -77,6 +78,19 @@ export default {
       isInvalid: false
     };
   },
+  created: function(){
+    let id = sessionStorage.getItem('idMessage');
+    let self = this;
+    axios
+        .get('http://localhost:3000/api/messages/getOneMessage/' + id, {headers: {Authorization: 'Bearer ' + sessionStorage.getItem('token')}})
+        .then(res => {
+          self.title = res.data.title.charAt(0).toUpperCase() + res.data.title.slice(1);
+          self.content = res.data.content;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+  },
 
   computed: {
     isModif() {
@@ -89,7 +103,6 @@ export default {
     selectFile() {
       this.file = this.$refs.file.files[0];
       this.urlImage = URL.createObjectURL(this.file);
-      console.log(this.urlImage);
     },
 
     createMessage() {
@@ -97,7 +110,7 @@ export default {
           this.isInvalid = true;
         } else {
           const formData = new FormData();
-          formData.append('image', this.file);
+          formData.append('urlImage', this.file);
           formData.append('title', this.title.toString());
           formData.append('content', this.content.toString());
           formData.append('userId', sessionStorage.getItem('userId'));
@@ -121,16 +134,13 @@ export default {
       },
 
     modifMessage(title, content) {
-        if (!this.title || !this.content) {
-          return (this.invalid = true);
-        }
+
         axios
             .put(
                 'http://localhost:3000/api/messages/updateMessage/' + sessionStorage.getItem('idMessage'),
                 {
-                  title,
-                  content,
-                  urlImage: this.urlImage
+                 title,
+                  content
                 },
                 {
                   headers: {

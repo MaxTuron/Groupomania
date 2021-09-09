@@ -53,17 +53,8 @@ exports.deleteMessage = (req, res, next) => {
 };
 
 exports.updateMessage = (req, res, next) => {
-    let imagePost = '';
-    if (req.file) {
-        imagePost = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
-        req.body.urlImage= imagePost;
-    }
 
-    db.messages.update(
-        req.body.title,
-        req.body.content,
-        req.body.urlImage,
-        { returning: true, where: { id: req.params.id } })
+    db.messages.update(req.body, { returning: true, where: { id: req.params.id } })
         .then(() => res.status(201).json({message: 'Modification réussie'}))
         .catch(error => res.status(400).json({error}));
 };

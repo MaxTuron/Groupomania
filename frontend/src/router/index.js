@@ -4,7 +4,6 @@ import Signup from '../Pages/Signup.vue';
 import Message from '../Pages/Message.vue';
 import Profile from '../Pages/Profile.vue';
 import CreationMessage from '../Pages/CreationMessage.vue';
-import modifProfil from '../Pages/modifProfil.vue';
 import ListeUtilisateur from '../Pages/ListeUtilisateur.vue';
 import ListeMessages from '../Pages/ListeMessages.vue';
 import modifMessage from '../Pages/modifMessage.vue';
@@ -35,11 +34,6 @@ const routes = [
     path: '/CreationMessage',
     name: 'CreationMessage',
     component: CreationMessage
-  },
-  {
-    path: '/modifProfil',
-    name: 'modifProfil',
-    component: modifProfil
   },
   {
     path: '/ListeUtilisateur',

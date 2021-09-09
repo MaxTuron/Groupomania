@@ -1,6 +1,7 @@
 <template>
   <section v-if="id!==''">
   <h1>Bienvenue sur la page de messagerie !</h1>
+    {{userId}}
   <router-link  to="/Profile">
     <button>Mon compte</button>
   </router-link>
