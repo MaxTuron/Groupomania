@@ -6,6 +6,7 @@ import Profile from '../Pages/Profile.vue';
 import CreationMessage from '../Pages/CreationMessage.vue';
 import ListeUtilisateur from '../Pages/ListeUtilisateur.vue';
 import ListeMessages from '../Pages/ListeMessages.vue';
+import ListeCommentaires from '../Pages/ListeCommentaires.vue';
 import modifMessage from '../Pages/modifMessage.vue';
 
 
@@ -39,6 +40,11 @@ const routes = [
     path: '/ListeUtilisateur',
     name: 'ListeUtilisateur',
     component: ListeUtilisateur
+  },
+  {
+    path: '/ListeCommentaires',
+    name: 'ListeCommentaires',
+    component: ListeCommentaires
   },
   {
     path: '/ListeMessages',

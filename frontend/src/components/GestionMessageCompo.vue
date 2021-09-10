@@ -45,12 +45,12 @@
       <input v-if="isModif===false" type="submit" value="Création du message">
     </div>
 
-    <button v-if="isModif===true" type="button" v-on:click="modifMessage(title, content)">
-      Modifier
+    <button v-if="isModif===true" type="button" v-on:click="modifMessage(title, content, urlImage)">
+      <i class="fas fa-edit"></i>Modifier
     </button>
 
     <button v-if="isModif===true" type="button" v-on:click="deleteMessage()">
-      Supprimer
+      <i class="fas fa-trash"></i>Supprimer
     </button>
 
     <div v-show="invalid" class="invalidBox m-2" key="invalid">
@@ -103,6 +103,7 @@ export default {
     selectFile() {
       this.file = this.$refs.file.files[0];
       this.urlImage = URL.createObjectURL(this.file);
+      return this.urlImage;
     },
 
     createMessage() {
@@ -110,11 +111,10 @@ export default {
           this.isInvalid = true;
         } else {
           const formData = new FormData();
-          formData.append('urlImage', this.file);
+          formData.append('image', this.file);
           formData.append('title', this.title.toString());
           formData.append('content', this.content.toString());
           formData.append('userId', sessionStorage.getItem('userId'));
-          console.log(formData)
           axios
               .post('http://localhost:3000/api/messages/createMessage',formData , {headers: {Authorization: 'Bearer ' + sessionStorage.getItem('token')}}, {
                 title: this.title,
@@ -134,7 +134,6 @@ export default {
       },
 
     modifMessage(title, content) {
-
         axios
             .put(
                 'http://localhost:3000/api/messages/updateMessage/' + sessionStorage.getItem('idMessage'),
@@ -171,6 +170,9 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+button, input{
+  margin-bottom: 5px;
+}
 
 </style>
