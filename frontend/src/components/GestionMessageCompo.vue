@@ -38,7 +38,6 @@
           id="file"
           accept=".jpg, .jpeg, .webp, .gif, .png"
       />
-
     </div>
 
     <div>
@@ -128,7 +127,6 @@ export default {
               })
               .catch(error => {
                 console.log(error);
-                console.log("Dans le catch");
               });
         }
       },
@@ -174,5 +172,4 @@ export default {
 button, input{
   margin-bottom: 5px;
 }
-
 </style>

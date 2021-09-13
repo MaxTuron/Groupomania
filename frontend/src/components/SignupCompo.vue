@@ -1,5 +1,4 @@
 <template>
-  <img src="../../../logo/icon-above-font.svg">
   <h1>Création d'un compte</h1>
   <form @submit.prevent="sendForm()" autocomplete="off" novalidate="true">
 
@@ -109,10 +108,6 @@ export default {
 </script>
 
 <style>
-img{
-  width: 20%;
-}
-
 form  {
   display: grid;
   justify-content: center;

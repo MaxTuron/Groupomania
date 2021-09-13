@@ -5,7 +5,7 @@ const auth = require('../middleware/auth');
 
 const CommentsCtrl = require('../controllers/Comments');
 
-router.post('/createComment',auth, CommentsCtrl.createComment); // Création d'un compte
+router.post('/createComment', CommentsCtrl.createComment);
 router.get('/getOneComment/:id',auth, CommentsCtrl.getOneComment);
 router.get('/getAllComment',auth, CommentsCtrl.getAllComment);
 router.delete('/deleteComment/:id', auth, CommentsCtrl.deleteComment);

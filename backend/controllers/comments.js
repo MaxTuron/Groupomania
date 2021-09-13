@@ -1,7 +1,5 @@
 const db = require('../models');
 
-//Créer un message//
-
 exports.createComment = (req, res, next) => {
     const comment = new db.comments({
         comment: req.body.comment,

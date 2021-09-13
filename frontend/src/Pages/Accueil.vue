@@ -1,6 +1,5 @@
 <template>
   <div class="main">
-    <img src="../../../logo/icon-above-font.svg">
     <h1>Connexion à un compte</h1>
     <Login></Login>
     <p>
@@ -38,7 +37,5 @@ li {
 a {
   color: #42b983;
 }
-img{
-  width: 20%;
-}
+
 </style>

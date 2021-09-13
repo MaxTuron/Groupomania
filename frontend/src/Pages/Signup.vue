@@ -26,7 +26,4 @@ li {
 a {
   color: #42b983;
 }
-img{
-  width: 20%;
-}
 </style>
