@@ -6,7 +6,11 @@ module.exports = (sequelize, DataTypes) => {
   class user extends Model {
   }
   user.init({
-    email: DataTypes.STRING,
+    email: {
+      type: DataTypes.STRING,
+      isEmail: true,
+      unique: true
+    },
     password: DataTypes.STRING,
     admin: DataTypes.BOOLEAN,
     name: DataTypes.STRING,

@@ -1,7 +1,6 @@
 <!--Centre de l'application VUE-->
 
 <template>
-
   <div id="nav">
     <img src="../../logo/icon-left-font-monochrome-white.svg" alt="LogoGroupomania">
     <navBar></navBar>
@@ -66,6 +65,7 @@ export default {
   #nav a.router-link-exact-active {
     color: #4a90f8;
   }
+
 }
 
 
