@@ -8,6 +8,8 @@ module.exports = (sequelize, DataTypes) => {
     messages.init({
         title: DataTypes.STRING,
         content: DataTypes.STRING,
+        name: DataTypes.STRING,
+        lastName: DataTypes.STRING,
         userId: DataTypes.INTEGER,
         urlImage: DataTypes.STRING
     }, {

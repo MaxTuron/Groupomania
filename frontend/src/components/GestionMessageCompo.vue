@@ -41,7 +41,7 @@
     </div>
 
     <div>
-      <input v-if="isModif===false" type="submit" value="Création du message">
+      <button v-if="isModif===false" title="Création du message" alt="Création du message" type="button" v-on:click="createMessage()">Création du message</button>
     </div>
 
     <button v-if="isModif===true" type="button" v-on:click="modifMessage(title, content, urlImage)">
@@ -114,12 +114,16 @@ export default {
           formData.append('title', this.title.toString());
           formData.append('content', this.content.toString());
           formData.append('userId', sessionStorage.getItem('userId'));
+          formData.append('name', sessionStorage.getItem('name'));
+          formData.append('lastName', sessionStorage.getItem('lastName'));
           axios
               .post('http://localhost:3000/api/messages/createMessage',formData , {headers: {Authorization: 'Bearer ' + sessionStorage.getItem('token')}}, {
                 title: this.title,
                 content: this.content,
                 urlImage: this.urlImage,
-                userId: this.userId
+                userId: this.userId,
+                name: this.name,
+                lastName: this.lastName
               })
               .then(() => {
                 alert('Publication crée');
@@ -169,7 +173,8 @@ export default {
 </script>
 
 <style>
-button, input{
-  margin-bottom: 5px;
+button{
+  border-radius: 20px;
 }
+
 </style>

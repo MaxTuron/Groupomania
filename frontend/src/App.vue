@@ -1,8 +1,11 @@
 <!--Centre de l'application VUE-->
 
 <template>
-  <div id="nav">
+  <div id="head">
     <img src="../../logo/icon-left-font-monochrome-white.svg" alt="LogoGroupomania">
+    <button v-if="isModif===false" title="Déconnexion" alt="Déconnexion" @click="deconexion"><i class="fas fa-power-off"></i></button>
+  </div>
+  <div id="nav">
     <navBar></navBar>
   </div>
   <router-view/>
@@ -10,11 +13,24 @@
 
 <script>
 import navBar from './components/navBar';
+import router from "./router";
 
 
 export default {
   name: "App",
-  components: {navBar}
+  components: {navBar},
+  methods: {
+
+    deconexion() {
+      sessionStorage.clear();
+      router.push({path: '/'});
+    }
+  },
+  computed: {
+    isModif() {
+      return this.$route.path === '/' || this.$route.path === '/signup'
+    }
+  }
 }
 </script>
 
@@ -35,8 +51,8 @@ export default {
     margin: 0px;
     height: 100%;
     width: 100%;
-  }
 
+  }
 
   #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -49,17 +65,32 @@ export default {
     height: 100%;
   }
 
-  #nav {
-    padding: 30px;
+  #head {
+    display: flex;
+    justify-content: space-between;
   }
 
   img {
     width: 20%;
   }
 
+  #nav
+  {
+    margin-top: -20px;
+  }
+
   #nav a {
     font-weight: bold;
     color: #ffffff;
+  }
+
+  #head button {
+    font-size: xx-large;
+    color: white;
+    background-color: transparent;
+    border: 0px transparent solid;
+    padding-top: 15px;
+    padding-right: 30px;
   }
 
   #nav a.router-link-exact-active {
@@ -78,12 +109,5 @@ export default {
 
 
 
-@media (max-width: 700px) {
-
-  img {
-    width: 70%;
-  }
-
-}
 
 </style>

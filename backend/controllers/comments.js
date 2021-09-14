@@ -6,7 +6,6 @@ exports.createComment = (req, res, next) => {
         idMessage: req.body.idMessage,
         userId: req.body.userId
     });
-    console.log(comment)
     comment
         .save()
         .then(() => res.status(201).json({message: 'Commentaire réussie'}))

@@ -1,10 +1,10 @@
 <template>
   <section v-if="id!==''">
-  <p class="m-1">Bonjour {{ inputName }} !</p>
+  <p>Bonjour {{ inputName }} !</p>
   <div >
     <form @submit.prevent="" autocomplete="off" novalidate="true">
 
-      <div class="formField">
+      <div>
         <label for="inputLastName">Nom</label>
         <input
             v-on:keydown="invalid = false"
@@ -16,7 +16,7 @@
         <button @click="majLastName(inputLastName)">Editer</button>
       </div>
 
-      <div class="formField">
+      <div>
         <label for="inputName">Prenom</label>
         <input
             v-on:keydown="invalid = false"
@@ -28,7 +28,7 @@
         <button @click="majName(inputName)">Editer</button>
       </div>
 
-      <div class="formField">
+      <div>
         <label for="inputEmail">Email</label>
         <input
             v-on:keydown="invalid = false"
@@ -40,7 +40,7 @@
         <button @click="majEmail(inputEmail)">Editer</button>
       </div>
 
-      <div class="formField">
+      <div>
         <label for="inputPassword">Mot de passe</label>
         <input
             v-on:keydown="invalid = false"
@@ -54,15 +54,12 @@
 
     </form>
   </div>
-  <div class="row justify-content-around">
-    <button @click="deconexion">Deconexion</button>
-  </div>
   <div class="col">
-    <button class="btn m-3" @click="deleteUser(id)">
+    <button @click="deleteUser(id)">
       Supprimer mon compte
     </button>
   </div>
-  <div class="card-body text-center">
+  <div>
     <p>Membre depuis le {{ creation }}</p>
   </div>
   </section>
@@ -118,11 +115,6 @@ export default {
   },
 
   methods: {
-
-    deconexion() {
-      sessionStorage.clear();
-      router.push({ path: '/' });
-    },
 
     deleteUser(userId) {
       let id = userId;
@@ -206,6 +198,9 @@ export default {
 };
 </script>
 
-<style scoped>
-
+<style>
+button {
+  border-radius: 20px;
+  margin-bottom: 5px;
+}
 </style>

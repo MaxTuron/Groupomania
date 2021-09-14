@@ -122,6 +122,8 @@ export default {
 };
 </script>
 
-<style scoped>
-
+<style>
+button {
+  border-radius: 20px;
+}
 </style>

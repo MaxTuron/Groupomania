@@ -1,7 +1,5 @@
 const db = require('../models');
 
-//Créer un message//
-
 exports.createMessage = (req, res, next) => {
     let imagePost = '';
     if (req.file) {
@@ -10,6 +8,8 @@ exports.createMessage = (req, res, next) => {
     const message = new db.messages({
         content: req.body.content,
         userId: req.body.userId,
+        name: req.body.name,
+        lastName: req.body.lastName,
         title: req.body.title,
         urlImage: imagePost
     });

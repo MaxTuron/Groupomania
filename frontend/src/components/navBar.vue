@@ -26,5 +26,7 @@ export default {
 </script>
 
 <style>
-
+button {
+  border-radius: 20px;
+}
 </style>

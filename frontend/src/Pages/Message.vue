@@ -3,36 +3,40 @@
     <h1>Bienvenue sur la page de messagerie !</h1>
 
     <router-link  to="/Profile">
-      <button><i class="fas fa-user-edit"></i> Mon compte</button>
+      <button title="Mon compte" alt="Mon compte"><i class="fas fa-user-edit"></i> Mon compte</button>
     </router-link>
-
+    <br>
     <router-link  to="/CreationMessage">
-      <button> <i class="fas fa-plus"></i> Créer un message</button>
+      <button title="Créer un message" alt="Créer un message" > <i class="fas fa-plus"></i> Créer un message</button>
     </router-link>
 
     <div v-if="admin===true">
       <h1>Menu Administrateur</h1>
       <router-link  to="/ListeUtilisateur">
-        <button> <i class="fas fa-users"></i> Liste des utilisateurs</button>
+        <button title="Liste des utilisateurs" alt="Liste des utilisateurs"> <i class="fas fa-users"></i> Liste des utilisateurs</button>
       </router-link> <br>
       <router-link  to="/ListeMessages">
-        <button><i class="fas fa-sticky-note"></i> Liste des messages</button>
+        <button title="Liste des messages" alt="Liste des messages"><i class="fas fa-sticky-note"></i> Liste des messages</button>
       </router-link> <br>
       <router-link  to="/ListeCommentaires">
-        <button><i class="fas fa-comments"></i> Liste des commentaires</button>
+        <button title="Liste des commentaires" alt="Liste des commentaires"><i class="fas fa-comments"></i> Liste des commentaires</button>
       </router-link>
       <p>Derniers messages publiées</p>
     </div>
 
   <div class="posts">
-
     <div class="cards" v-for="itemMessage in messages" :key="itemMessage.title">
-      <h2>{{ messageTitle(itemMessage) }}</h2>
+
+      <div class="headMessage">
+        <h1>{{ messageAuteur(itemMessage) }}</h1>
+        <h2>{{ messageDate(itemMessage) }}</h2>
+      </div>
+
+      <h3>{{ messageTitle(itemMessage) }}</h3>
       <p>{{messageContent(itemMessage)}}</p>
-        <img v-bind:src="itemMessage.urlImage" alt="Image Post">
-        <h3>Date de création : {{messageDate(itemMessage)}}</h3>
+        <img v-bind:src="itemMessage.urlImage">
         <div v-if="itemMessage.userId===id">
-          <button type="button" @click="modifMessage(itemMessage.id)">
+          <button title="Modifier" alt="Modifier" type="button" @click="modifMessage(itemMessage.id)">
             <i class="fas fa-edit"></i>Modifier
           </button>
         </div>
@@ -42,7 +46,7 @@
             <div class="comments">
               <p> Commentaire : {{ contenuComment(itemComment)}} </p>
             </div>
-            <button v-if="id===itemComment.userId" type="button" v-on:click="deleteComment(itemComment.id)">
+            <button title="Supprimer" alt="Supprimer" v-if="id===itemComment.userId" type="button" v-on:click="deleteComment(itemComment.id)">
               <i class="fas fa-trash"></i>Supprimer
             </button>
           </div>
@@ -59,7 +63,7 @@
           ></textarea>
         </div>
 
-      <button type="button" v-on:click="createComment(itemMessage.id, comment)">
+      <button title="Répondre" alt="Répondre" type="button" v-on:click="createComment(itemMessage.id, comment)">
         <i class="fas fa-edit"></i>Répondre
       </button>
 
@@ -143,20 +147,25 @@ export default {
     },
 
     createComment(idMessage, comment) {
-      let userId=sessionStorage.getItem('userId')
+      let userId =sessionStorage.getItem('userId');
       axios
           .post('http://localhost:3000/api/comments/createComment',{idMessage, comment, userId} , {headers: {Authorization: 'Bearer ' + sessionStorage.getItem('token')}}, {
           })
             .then(() => {
-            window.location.reload()
+
+              window.location.reload()
           })
           .catch(error => {
+            console.log(idMessage,comment,userId,sessionStorage.getItem('token'))
             console.log(error);
           });
     },
 
     messageTitle(itemMessage){
       return itemMessage.title.charAt(0).toUpperCase() + itemMessage.title.slice(1);
+    },
+    messageAuteur(itemMessage){
+      return itemMessage.name +' '+ itemMessage.lastName;
     },
     messageContent(itemMessage){
       return itemMessage.content
@@ -203,7 +212,6 @@ export default {
   }
 
   img {
-    height: 100%;
     width: 100%;
   }
 
@@ -214,7 +222,7 @@ export default {
     border: 2px white solid;
     border-radius: 20px;
     margin: 5px 0 5px 0;
-    width: 60%;
+    width: 40%;
   }
 
   .cardsComment {
@@ -237,6 +245,18 @@ export default {
     border: 2px solid white;
     border-radius: 5px;
   }
+
+  .headMessage{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .headMessage h1, h2{
+    padding-right: 5px;
+    padding-left: 5px;
+  }
+
 }
 
 @media (max-width: 700px) {

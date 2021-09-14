@@ -120,4 +120,7 @@ label {
 .formField {
   margin-bottom: 10px;
 }
+button {
+  border-radius: 20px;
+}
 </style>
