@@ -145,11 +145,8 @@ export default {
     },
 
     createComment(idMessage, comment) {
-      let userId =sessionStorage.getItem('userId');
-      let name = sessionStorage.getItem('name');
-      let lastName = sessionStorage.getItem('lastName');
       axios
-          .post('http://localhost:3000/api/comments/createComment',{idMessage, comment, userId,name,lastName} , {headers: {Authorization: 'Bearer ' + sessionStorage.getItem('token')}}, {
+          .post('http://localhost:3000/api/comments/createComment',{idMessage, comment} , {headers: {Authorization: 'Bearer ' + sessionStorage.getItem('token')}}, {
           })
             .then(() => {
               window.location.reload()

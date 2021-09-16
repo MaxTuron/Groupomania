@@ -6,6 +6,7 @@ exports.createComment = (req, res, next) => {
     const userId = jwtUtils.getUserId(headerAuth);
     const name = jwtUtils.getUserName(headerAuth);
     const lastName = jwtUtils.getUserLastName(headerAuth);
+    console.log(name,lastName)
     if(userId<0 ){
         return res.status(400).json({ 'error': 'wrong token' })
     }else {
@@ -13,8 +14,8 @@ exports.createComment = (req, res, next) => {
             comment: req.body.comment,
             idMessage: req.body.idMessage,
             name: name,
-            lastName:lastName,
-            userId:userId,
+            lastName: lastName,
+            userId: userId,
         });
         console.log(comment)
         comment
