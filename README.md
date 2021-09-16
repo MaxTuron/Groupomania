@@ -23,3 +23,5 @@
 5. Selectionner la BDD avec "USE database_development_projet7;"
 6. Depuis le backend utiliser la commande "sequelize db:migrate" pour créer les tables
 
+### Utilisateur admin
+Apres la création du 1er utilisateur, faire la commande "UPDATE users SET admin=1 WHERE id=1;" dans la BDD SQL.
