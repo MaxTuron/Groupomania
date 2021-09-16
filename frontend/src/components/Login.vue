@@ -49,10 +49,6 @@ export default {
           })
           .then((res) => {
             sessionStorage.setItem("token", res.data.token);
-            sessionStorage.setItem("name", res.data.name);
-            sessionStorage.setItem("lastName", res.data.lastName);
-            sessionStorage.setItem("admin", res.data.admin);
-            sessionStorage.setItem("userId", res.data.userId);
             this.mail = "";
             this.password = "";
             this.$router.push({path: '/Message'});

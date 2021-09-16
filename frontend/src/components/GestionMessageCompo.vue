@@ -44,7 +44,7 @@
       <button v-if="isModif===false" title="Création du message" alt="Création du message" type="button" v-on:click="createMessage()">Création du message</button>
     </div>
 
-    <button v-if="isModif===true" type="button" v-on:click="modifMessage(title, content, urlImage)">
+    <button v-if="isModif===true" type="button" v-on:click="modifMessage()">
       <i class="fas fa-edit"></i>Modifier
     </button>
 
@@ -79,12 +79,11 @@ export default {
   },
   created: function(){
     let id = sessionStorage.getItem('idMessage');
-    let self = this;
     axios
-        .get('http://localhost:3000/api/messages/getOneMessage/' + id, {headers: {Authorization: 'Bearer ' + sessionStorage.getItem('token')}})
+        .get('http://localhost:3000/api/messages/getOneMessage/'+id, {headers: {Authorization: 'Bearer ' + sessionStorage.getItem('token')}})
         .then(res => {
-          self.title = res.data.title.charAt(0).toUpperCase() + res.data.title.slice(1);
-          self.content = res.data.content;
+          this.title = res.data.title.charAt(0).toUpperCase() + res.data.title.slice(1);
+          this.content = res.data.content;
         })
         .catch(error => {
           console.log(error);
@@ -102,28 +101,18 @@ export default {
     selectFile() {
       this.file = this.$refs.file.files[0];
       this.urlImage = URL.createObjectURL(this.file);
-      return this.urlImage;
     },
 
     createMessage() {
-        if (!this.content || !this.title) {
-          this.isInvalid = true;
-        } else {
-          const formData = new FormData();
-          formData.append('image', this.file);
-          formData.append('title', this.title.toString());
-          formData.append('content', this.content.toString());
-          formData.append('userId', sessionStorage.getItem('userId'));
-          formData.append('name', sessionStorage.getItem('name'));
-          formData.append('lastName', sessionStorage.getItem('lastName'));
+      const formData = new FormData();
+      formData.append('image', this.file);
+      formData.append('title', this.title.toString());
+      formData.append('content', this.content.toString());
           axios
-              .post('http://localhost:3000/api/messages/createMessage',formData , {headers: {Authorization: 'Bearer ' + sessionStorage.getItem('token')}}, {
+              .post('http://localhost:3000/api/messages/createMessage', formData, {headers: {Authorization: 'Bearer ' + sessionStorage.getItem('token')}}, {
                 title: this.title,
                 content: this.content,
-                urlImage: this.urlImage,
-                userId: this.userId,
-                name: this.name,
-                lastName: this.lastName
+                urlImage: this.urlImage
               })
               .then(() => {
                 alert('Publication crée');
@@ -132,23 +121,19 @@ export default {
               .catch(error => {
                 console.log(error);
               });
-        }
       },
 
-    modifMessage(title, content) {
+    modifMessage() {
+      const formData = new FormData();
+      formData.append('image', this.file);
+      formData.append('title', this.title.toString());
+      formData.append('content', this.content.toString());
         axios
-            .put(
-                'http://localhost:3000/api/messages/updateMessage/' + sessionStorage.getItem('idMessage'),
-                {
-                 title,
-                  content
-                },
-                {
-                  headers: {
-                    Authorization: 'Bearer ' + sessionStorage.getItem('token')
-                  }
-                }
-            )
+            .put('http://localhost:3000/api/messages/updateMessage/' + sessionStorage.getItem('idMessage'), formData, {headers: {Authorization: 'Bearer ' + sessionStorage.getItem('token')}}, {
+                  title: this.title,
+                  content: this.content,
+                  urlImage: this.urlImage
+                })
             .then(() => {
               router.push({path: '/Message'});
             })

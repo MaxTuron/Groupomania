@@ -36,7 +36,7 @@
               }}
             </p>
               <span class="spanTableau">
-								<button class="rounded" @click="supprimerUnUtilisateur(item.id, admin)">Supprimer</button>
+								<button class="rounded" @click="supprimerUnUtilisateur(item.id)">Supprimer</button>
 							</span>
           </div>
         </sub>
@@ -63,18 +63,16 @@ export default {
     };
   },
   created: function() {
-    let id = sessionStorage.getItem('userId');
-    let self = this;
     axios
-        .get('http://localhost:3000/api/user/getOneUser/' + id, { headers: { Authorization: 'Bearer ' + sessionStorage.getItem('token') } })
+        .get('http://localhost:3000/api/user/getOneUser', { headers: { Authorization: 'Bearer ' + sessionStorage.getItem('token') } })
         .then(res => {
-          self.creation = res.data.createdAt
+          this.creation = res.data.createdAt
               .slice(0, 10)
               .split('-')
               .reverse()
               .join('/');
-          self.admin = res.data.admin;
-          self.name = res.data.name.charAt(0).toUpperCase() + res.data.name.slice(1);
+          this.admin = res.data.admin;
+          this.name = res.data.name.charAt(0).toUpperCase() + res.data.name.slice(1);
         })
         .catch(error => {
           console.log(error);
@@ -94,18 +92,15 @@ export default {
         });
   },
   methods: {
-    supprimerUnUtilisateur(userId, isAdmin) {
+    supprimerUnUtilisateur(userId) {
+      let id = userId;
       let confSuppr = confirm('Souhaitez-vous supprimer cet utilisateur ?');
       if (confSuppr == true) {
         axios
-            .delete('http://localhost:3000/api/user/deleteOneUser/', {
+            .delete('http://localhost:3000/api/user/deleteOneUser/' + id, {
               headers: {
                 Authorization: 'Bearer ' + sessionStorage.getItem('token')
               },
-              params: {
-                id: userId,
-                admin: isAdmin
-              }
             })
             .then(res => {
               console.log(res);

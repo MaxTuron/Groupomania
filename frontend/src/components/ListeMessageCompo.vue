@@ -62,18 +62,16 @@ export default {
     };
   },
   created: function() {
-    let id = sessionStorage.getItem('userId');
-    let self = this;
     axios
-        .get('http://localhost:3000/api/user/getOneUser/' + id, { headers: { Authorization: 'Bearer ' + sessionStorage.getItem('token') } })
+        .get('http://localhost:3000/api/user/getOneUser', { headers: { Authorization: 'Bearer ' + sessionStorage.getItem('token') } })
         .then(res => {
-          self.creation = res.data.createdAt
+          this.creation = res.data.createdAt
               .slice(0, 10)
               .split('-')
               .reverse()
               .join('/');
-          self.admin = res.data.admin;
-          self.name = res.data.name.charAt(0).toUpperCase() + res.data.name.slice(1);
+          this.admin = res.data.admin;
+          this.name = res.data.name.charAt(0).toUpperCase() + res.data.name.slice(1);
         })
         .catch(error => {
           console.log(error);

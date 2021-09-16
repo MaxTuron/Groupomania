@@ -6,14 +6,14 @@ const userCtrl = require('../controllers/user');
 
 router.post('/signup', userCtrl.signup); // Création d'un compte
 router.post('/login', userCtrl.login);
-router.get('/getOneUser/:id',auth, userCtrl.getOneUser);
+router.get('/getOneUser',auth, userCtrl.getOneUser);
 router.get('/getAllUser',auth, userCtrl.getAllUser);
-router.delete('/deleteUser/:id', auth, userCtrl.deleteUser);
-router.delete('/deleteOneUser/', auth, userCtrl.deleteOneUser);
-router.put('/updateLastName/:id', auth, userCtrl.updateLastName);
-router.put('/updateName/:id', auth, userCtrl.updateName);
-router.put('/updateEmail/:id', auth, userCtrl.updateEmail);
-router.put('/updatePassword/:id', auth, userCtrl.updatePassword);
+router.delete('/deleteUser',auth, userCtrl.deleteUser);
+router.delete('/deleteOneUser/:id',auth, userCtrl.deleteOneUser);
+router.put('/updateLastName',auth, userCtrl.updateLastName);
+router.put('/updateName',auth, userCtrl.updateName);
+router.put('/updateEmail',auth, userCtrl.updateEmail);
+router.put('/updatePassword',auth, userCtrl.updatePassword);
 
 
 

@@ -34,7 +34,7 @@
 
       <h3>{{ messageTitle(itemMessage) }}</h3>
       <p>{{messageContent(itemMessage)}}</p>
-        <img v-bind:src="itemMessage.urlImage">
+        <img v-bind:src="itemMessage.urlImage" alt="Image Post">
         <div v-if="itemMessage.userId===id">
           <button title="Modifier" alt="Modifier" type="button" @click="modifMessage(itemMessage.id)">
             <i class="fas fa-edit"></i>Modifier
@@ -44,7 +44,7 @@
         <div v-for="itemComment in comments" :key="itemComment.comment">
           <div class="cardsComment" v-if="itemMessage.id===itemComment.idMessage">
             <div class="comments">
-              <p> Commentaire : {{ contenuComment(itemComment)}} </p>
+              <p> {{ commentAuteur(itemComment) }} : {{ contenuComment(itemComment)}} </p>
             </div>
             <button title="Supprimer" alt="Supprimer" v-if="id===itemComment.userId" type="button" v-on:click="deleteComment(itemComment.id)">
               <i class="fas fa-trash"></i>Supprimer
@@ -95,19 +95,17 @@ export default {
     };
   },
   created: function () {
-    let id = sessionStorage.getItem('userId');
-    let self = this;
     axios
-        .get('http://localhost:3000/api/user/getOneUser/' + id, {headers: {Authorization: 'Bearer ' + sessionStorage.getItem('token')}})
+        .get('http://localhost:3000/api/user/getOneUser', {headers: {Authorization: 'Bearer ' + sessionStorage.getItem('token')}})
         .then(res => {
-          self.admin = res.data.admin;
-          self.id = res.data.id;
+          this.admin = res.data.admin;
+          this.id = res.data.id;
         })
         .catch(error => {
           console.log(error);
         });
     axios
-        .get('http://localhost:3000/api/messages/getAllMessages', {headers: {Authorization: 'Bearer ' + sessionStorage.getItem('token')}})
+        .get('http://localhost:3000/api/messages/getAllMessages',{headers: {Authorization: 'Bearer ' + sessionStorage.getItem('token')}})
         .then(res => {
           this.messages = res.data.messages
         })
@@ -148,15 +146,15 @@ export default {
 
     createComment(idMessage, comment) {
       let userId =sessionStorage.getItem('userId');
+      let name = sessionStorage.getItem('name');
+      let lastName = sessionStorage.getItem('lastName');
       axios
-          .post('http://localhost:3000/api/comments/createComment',{idMessage, comment, userId} , {headers: {Authorization: 'Bearer ' + sessionStorage.getItem('token')}}, {
+          .post('http://localhost:3000/api/comments/createComment',{idMessage, comment, userId,name,lastName} , {headers: {Authorization: 'Bearer ' + sessionStorage.getItem('token')}}, {
           })
             .then(() => {
-
               window.location.reload()
           })
           .catch(error => {
-            console.log(idMessage,comment,userId,sessionStorage.getItem('token'))
             console.log(error);
           });
     },
@@ -166,6 +164,9 @@ export default {
     },
     messageAuteur(itemMessage){
       return itemMessage.name +' '+ itemMessage.lastName;
+    },
+    commentAuteur(itemComment){
+      return itemComment.name +' '+ itemComment.lastName;
     },
     messageContent(itemMessage){
       return itemMessage.content
@@ -212,7 +213,8 @@ export default {
   }
 
   img {
-    width: 100%;
+    height: 80%;
+    width: 60%;
   }
 
   .cards {
@@ -222,7 +224,8 @@ export default {
     border: 2px white solid;
     border-radius: 20px;
     margin: 5px 0 5px 0;
-    width: 40%;
+    width: 60%;
+    height: 80%;
   }
 
   .cardsComment {
