@@ -8,7 +8,7 @@ router.post('/signup', userCtrl.signup); // Création d'un compte
 router.post('/login', userCtrl.login);
 router.get('/getOneUser',auth, userCtrl.getOneUser);
 router.get('/getAllUser',auth, userCtrl.getAllUser);
-router.delete('/deleteUser',auth, userCtrl.deleteUser);
+router.delete('/deleteUser/:id',auth, userCtrl.deleteUser);
 router.delete('/deleteOneUser/:id',auth, userCtrl.deleteOneUser);
 router.put('/updateLastName',auth, userCtrl.updateLastName);
 router.put('/updateName',auth, userCtrl.updateName);
