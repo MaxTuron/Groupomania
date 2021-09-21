@@ -26,11 +26,7 @@ exports.createComment = (req, res, next) => {
 };
 
 exports.getOneComment = (req, res, next) => {
-    const headerAuth = req.headers['authorization'];
-    const userId = jwtUtils.getUserId(headerAuth);
-    if(userId<0){
-        return res.status(400).json({ 'error': 'wrong token' })
-    }else {
+
         const commentData = {};
         db.comments.findOne({where: {id: req.params.id}})
             .then(comments => {
@@ -42,7 +38,6 @@ exports.getOneComment = (req, res, next) => {
                 res.status(200).json(commentData);
             })
             .catch(error => res.status(404).json({error}));
-    }
 };
 
 exports.getAllComment = (req, res, next) => {

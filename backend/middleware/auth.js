@@ -1,6 +1,7 @@
 //importe package jsonwebtoken
 const jwt = require('jsonwebtoken');
 
+
 // exporte le middleware
 module.exports = (req, res, next) => {
     try{

@@ -64,16 +64,9 @@ exports.getOneUser = (req, res, next) => {
 };
 
 exports.getAllUser = (req, res, next) => {
-    const headerAuth = req.headers['authorization'];
-    const userId = jwtUtils.getUserId(headerAuth);
-    const admin = jwtUtils.getUserAdmin(headerAuth);
-if(userId<0 || admin===false){
-    return res.status(400).json({ 'error': 'wrong token' })
-}else {
     db.user.findAll()
         .then((users) => res.status(200).json({users}))
         .catch((error) => res.status(500).json({error}));
-}
 };
 
 exports.deleteUser = (req, res, next) => {
@@ -85,20 +78,11 @@ exports.deleteUser = (req, res, next) => {
 };
 
 exports.deleteOneUser = (req, res, next) => {
-    const headerAuth = req.headers['authorization'];
-    const userId = jwtUtils.getUserId(headerAuth);
-    const admin = jwtUtils.getUserAdmin(headerAuth);
-    if(userId<0 || admin===false ){
-        return res.status(400).json({ 'error': 'wrong token' })
-    }else if (admin === true) {
         db.user.destroy({ where: { id: req.params.id } })
             .then(res => {
                 res.status(200).json({ message: 'L\'utilisateur à été supprimé' });
             })
             .catch(error => res.status(400).json({ error }));
-    } else {
-        res.status(401).json({ message: ' Action non autorisée ' });
-    }
 };
 
 exports.updateLastName = (req, res, next) => {
