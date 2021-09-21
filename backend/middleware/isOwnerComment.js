@@ -5,9 +5,9 @@ module.exports = (req, res, next) => {
     const userId = req.userId;
     const admin = req.admin;
     try{
-        db.user.findOne({ where: { id: userId } })
-            .then((userFound) => {
-                if(!userFound || userId!==userFound.id){
+        db.comments.findOne({ where: { id: userId } })
+            .then((commentFound) => {
+                if(!commentFound || userId!==commentFound.userId){
                     return res.status(400).json({ 'error': 'wrong token' })
                 }else {
                     req.userId = userId;
