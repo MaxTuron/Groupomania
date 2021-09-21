@@ -1,4 +1,4 @@
-// Vérifier si la ressource (compte message ou commentaire) est la propriété cu client ou admin
+
 const db = require("../models");
 
 module.exports = (req, res, next) => {
@@ -9,9 +9,11 @@ module.exports = (req, res, next) => {
     try{
         db.user.findOne({ where: { id: userId } })
             .then((userFound) => {
-                if(!userFound || userId<0){
+                if(!userFound || admin===false){
                     return res.status(400).json({ 'error': 'wrong token' })
                 }else {
+                    req.userId = userId;
+                    req.admin = admin;
                     next();
                 }
 
