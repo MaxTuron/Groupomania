@@ -94,7 +94,7 @@ export default {
 
   created: function() {
     axios
-        .get('http://localhost:3000/api/user/getOneUser', {headers: {Authorization: 'Bearer ' + sessionStorage.getItem('token')}})
+        .get('http://localhost:3000/api/user/getOneUser', {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}})
         .then(res => {
           this.creation = res.data.createdAt
               .slice(0, 10)
@@ -118,7 +118,7 @@ export default {
       let id = userId;
 
       axios
-          .delete('http://localhost:3000/api/user/deleteUser/' + id, { headers: { Authorization: 'Bearer ' + sessionStorage.getItem('token') } })
+          .delete('http://localhost:3000/api/user/deleteUser/' + id, { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') } })
           .then(res => {
             router.push({ path: '/' });
             console.log(res);
@@ -135,7 +135,7 @@ export default {
 
       if (nameRegex.test(this.inputLastName)) {
         axios
-            .put('http://localhost:3000/api/user/updateLastName' , {lastName},{headers: {Authorization: 'Bearer ' + sessionStorage.getItem('token')}})
+            .put('http://localhost:3000/api/user/updateLastName' , {lastName},{headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}})
             .then(() => {
               window.location.reload();
             })
@@ -153,7 +153,7 @@ export default {
 
       if (nameRegex.test(this.inputName)) {
         axios
-            .put('http://localhost:3000/api/user/updateLastName', {name}, {headers: {Authorization: 'Bearer ' + sessionStorage.getItem('token')}})
+            .put('http://localhost:3000/api/user/updateLastName', {name}, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}})
             .then(() => {
               window.location.reload();
             })
@@ -171,7 +171,7 @@ export default {
 
       if (mailRegex.test(this.inputEmail)) {
         axios
-            .put('http://localhost:3000/api/user/updateEmail', {email}, {headers: {Authorization: 'Bearer ' + sessionStorage.getItem('token')}})
+            .put('http://localhost:3000/api/user/updateEmail', {email}, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}})
             .then(() => {
               window.location.reload();
             })
@@ -186,7 +186,7 @@ export default {
         return (this.invalid = true);
       }
       axios
-          .put('http://localhost:3000/api/user/updatePassword', {password}, {headers: {Authorization: 'Bearer ' + sessionStorage.getItem('token')}})
+          .put('http://localhost:3000/api/user/updatePassword', {password}, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}})
           .then(() => {
             window.location.reload();
           })

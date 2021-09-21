@@ -25,25 +25,18 @@ exports.getOneMessage = (req, res, next) => {
 };
 
 exports.getAllMessages = (req, res, next) => {
-    const headerAuth = req.headers['authorization'];
-    const userId = jwtUtils.getUserId(headerAuth);
-    if(userId<0){
-        return res.status(400).json({ 'error': 'wrong token' })
-    }else {
         db.messages.findAll({order: [['createdAt', 'DESC']]})
             .then((messages) => {
                 res.status(200).json({messages})
             })
             .catch((error) => res.status(500).json({error}));
-    }
 };
 
 
 exports.deleteMessage = (req, res, next) => {
     const headerAuth = req.headers['authorization'];
     const userId = jwtUtils.getUserId(headerAuth);
-    const admin = jwtUtils.getUserAdmin(headerAuth);
-    if(userId<0 || admin===false){
+    if(userId<0 ){
         return res.status(400).json({ 'error': 'wrong token' })
     }else {
         db.messages.destroy({where: {id: req.params.id}})

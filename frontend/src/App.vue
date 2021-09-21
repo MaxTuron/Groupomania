@@ -22,7 +22,7 @@ export default {
   methods: {
 
     deconexion() {
-      sessionStorage.clear();
+      localStorage.clear();
       router.push({path: '/'});
     }
   },

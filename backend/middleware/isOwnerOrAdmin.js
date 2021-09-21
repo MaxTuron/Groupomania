@@ -1,0 +1,1 @@
+// Vérifier si la ressource (compte message ou commentaire) est la propriété cu client ou admin

@@ -16,6 +16,7 @@ module.exports = (req, res, next) => {
             console.log('token authentifié')
             next();
         }
+        next(decodedToken);
     }
     catch(error){
         res.status(401).json({error: error && 'Requete non authentifié!'});

@@ -16,7 +16,7 @@
 2. Lancer le serveur avec "nodemon"
 
 ### Conexion à la BDD SQL
-1. Instaler et exécuté MAMP
+1. Instaler et exécuter MAMP
 2. Depuis un terminal accéder au dossier MySQL (Ex: "C:\MAMP\bin\mysql\bin")
 3. Utiliser la commande "mysql -u root -p" pour lancé MySQL (MDP : root)
 4. Créer la base de donnée avec la commande "Create database database_development_projet7;"

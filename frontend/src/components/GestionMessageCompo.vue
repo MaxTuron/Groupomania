@@ -78,9 +78,9 @@ export default {
     };
   },
   created: function(){
-    let id = sessionStorage.getItem('idMessage');
+    let id = localStorage.getItem('idMessage');
     axios
-        .get('http://localhost:3000/api/messages/getOneMessage/'+id, {headers: {Authorization: 'Bearer ' + sessionStorage.getItem('token')}})
+        .get('http://localhost:3000/api/messages/getOneMessage/'+id, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}})
         .then(res => {
           this.title = res.data.title.charAt(0).toUpperCase() + res.data.title.slice(1);
           this.content = res.data.content;
@@ -109,7 +109,7 @@ export default {
       formData.append('title', this.title.toString());
       formData.append('content', this.content.toString());
           axios
-              .post('http://localhost:3000/api/messages/createMessage', formData, {headers: {Authorization: 'Bearer ' + sessionStorage.getItem('token')}}, {
+              .post('http://localhost:3000/api/messages/createMessage', formData, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}}, {
                 title: this.title,
                 content: this.content,
                 urlImage: this.urlImage
@@ -129,7 +129,7 @@ export default {
       formData.append('title', this.title.toString());
       formData.append('content', this.content.toString());
         axios
-            .put('http://localhost:3000/api/messages/updateMessage/' + sessionStorage.getItem('idMessage'), formData, {headers: {Authorization: 'Bearer ' + sessionStorage.getItem('token')}}, {
+            .put('http://localhost:3000/api/messages/updateMessage/' + localStorage.getItem('idMessage'), formData, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}}, {
                   title: this.title,
                   content: this.content,
                   urlImage: this.urlImage
@@ -141,10 +141,10 @@ export default {
       },
 
     deleteMessage() {
-      let id = sessionStorage.getItem('idMessage');
+      let id = localStorage.getItem('idMessage');
 
       axios
-          .delete('http://localhost:3000/api/messages/deleteMessage/' + id, {headers: {Authorization: 'Bearer ' + sessionStorage.getItem('token')}})
+          .delete('http://localhost:3000/api/messages/deleteMessage/' + id, {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}})
           .then(res => {
             router.push({path: '/Message'});
             console.log(res);

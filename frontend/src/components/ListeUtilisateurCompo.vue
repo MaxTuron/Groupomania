@@ -64,7 +64,7 @@ export default {
   },
   created: function() {
     axios
-        .get('http://localhost:3000/api/user/getOneUser', { headers: { Authorization: 'Bearer ' + sessionStorage.getItem('token') } })
+        .get('http://localhost:3000/api/user/getOneUser', { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') } })
         .then(res => {
           this.creation = res.data.createdAt
               .slice(0, 10)
@@ -78,7 +78,7 @@ export default {
           console.log(error);
         });
     axios
-        .get('http://localhost:3000/api/user/getAllUser', { headers: { Authorization: 'Bearer ' + sessionStorage.getItem('token') } })
+        .get('http://localhost:3000/api/user/getAllUser', { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') } })
         .then(res => {
           this.user = res.data.users;
           console.log(res);
@@ -99,7 +99,7 @@ export default {
         axios
             .delete('http://localhost:3000/api/user/deleteOneUser/' + id, {
               headers: {
-                Authorization: 'Bearer ' + sessionStorage.getItem('token')
+                Authorization: 'Bearer ' + localStorage.getItem('token')
               },
             })
             .then(res => {
@@ -116,7 +116,7 @@ export default {
       }
     },
     sessionClear() {
-      sessionStorage.clear();
+      localStorage.clear();
       router.push({ path: '/' });
     },
   }
