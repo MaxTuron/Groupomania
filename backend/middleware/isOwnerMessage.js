@@ -7,8 +7,7 @@ module.exports = (req, res, next) => {
         db.messages.findOne({ where: { userId: userId } })
             .then((messagesFound) => {
                 if(!messagesFound || messagesFound.userId!==userId){
-                    return res.status(400).json({ 'error': 'Vous n\'etes pas l\`auteur' })
-
+                    return res.status(400).json({ 'error': 'Vous n\'etes pas l\`auteur du message' })
                 }else {
                     req.userId = userId;
                     req.admin = admin;

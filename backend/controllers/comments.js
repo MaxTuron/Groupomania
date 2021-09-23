@@ -56,16 +56,17 @@ exports.getAllComment = (req, res, next) => {
 
 
 exports.deleteComment = (req, res, next) => {
-    const headerAuth = req.headers['authorization'];
-    const userId = jwtUtils.getUserId(headerAuth);
-    if(userId<0){
-        return res.status(400).json({ 'error': 'wrong token' })
-    }else {
         console.log(req, res, next);
         db.comments.destroy({where: {id: req.params.id}})
             .then(() => res.status(200).json({message: 'comments supprimé'}))
             .catch(error => console.log(error));
-    }
+};
+
+exports.deleteOneComment = (req, res, next) => {
+        console.log(req, res, next);
+        db.comments.destroy({where: {id: req.params.id}})
+            .then(() => res.status(200).json({message: 'comments supprimé'}))
+            .catch(error => console.log(error));
 };
 
 
