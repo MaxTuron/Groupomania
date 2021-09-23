@@ -94,7 +94,7 @@ export default {
       let confSuppr = confirm('Souhaitez-vous supprimer ce message ?');
       if (confSuppr == true) {
         axios
-            .delete('http://localhost:3000/api/messages/deleteMessage/'+id, {
+            .delete('http://localhost:3000/api/messages/deleteOneMessage/'+id, {
               headers: {
                 Authorization: 'Bearer ' + localStorage.getItem('token')
               },

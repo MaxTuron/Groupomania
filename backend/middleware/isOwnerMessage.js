@@ -1,4 +1,3 @@
-
 const db = require("../models");
 
 module.exports = (req, res, next) => {
@@ -8,7 +7,7 @@ module.exports = (req, res, next) => {
         db.messages.findOne({ where: { id: userId } })
             .then((messagesFound) => {
                 if(!messagesFound || userId!==messagesFound.userId){
-                    return res.status(400).json({ 'error': 'wrong token' })
+                    return res.status(400).json({ 'error': 'Vous n\'etes pas l\`auteur' })
                 }else {
                     req.userId = userId;
                     req.admin = admin;

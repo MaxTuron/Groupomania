@@ -10,7 +10,7 @@ module.exports = (req, res, next) => {
         db.user.findOne({ where: { id: userId } })
             .then((userFound) => {
                 if(!userFound || admin===false){
-                    return res.status(400).json({ 'error': 'wrong token' })
+                    return res.status(400).json({ 'error': 'Vous n\etes pas admin' })
                 }else {
                     req.userId = userId;
                     req.admin = admin;

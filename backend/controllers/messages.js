@@ -34,15 +34,15 @@ exports.getAllMessages = (req, res, next) => {
 
 
 exports.deleteMessage = (req, res, next) => {
-    const headerAuth = req.headers['authorization'];
-    const userId = jwtUtils.getUserId(headerAuth);
-    if(userId<0 ){
-        return res.status(400).json({ 'error': 'wrong token' })
-    }else {
         db.messages.destroy({where: {id: req.params.id}})
             .then(() => res.status(200).json({message: 'Message supprimé'}))
             .catch(error => console.log(error));
-    }
+};
+
+exports.deleteOneMessage = (req, res, next) => {
+        db.messages.destroy({where: {id: req.params.id}})
+            .then(() => res.status(200).json({message: 'Message supprimé'}))
+            .catch(error => console.log(error));
 };
 
 exports.updateMessage = (req, res, next) => {
